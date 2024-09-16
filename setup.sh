@@ -94,7 +94,7 @@ checkEnv() {
 
 installDepend() {
     ## Check for dependencies.
-    DEPENDENCIES='bash bash-completion tar xorg xdg-user-dirs xorg-xinit arandr bat tree multitail fastfetch wget unzip fontconfig bspwm dconf dunst kitty thunar thunar-volman thunar-archive-plugin nitrogen picom base-devel git pulseaudio pulseaudio-alsa pulseaudio-bluetooth ly ranger bluez bluez-utils brightnessctl htop xf86-video-intel unzip npm python3 python3-pip git'
+    DEPENDENCIES='bash bash-completion tar xorg xdg-user-dirs xorg-xinit arandr bat tree multitail fastfetch wget unzip fontconfig bspwm dconf dunst kitty thunar thunar-volman thunar-archive-plugin nitrogen picom base-devel git pulseaudio pulseaudio-alsa pulseaudio-bluetooth ly ranger bluez bluez-utils brightnessctl htop xf86-video-intel npm python3 python3-pip libconfig dbus libev libx11 libxcb libxext libgl libegl libepoxy meson pcre2 pixman uthash xcb-util-image xcb-util-renderutil xorgproto cmake libxft libimlib2 libxinerama libxcb-res xorg-xev xorg-xbacklight alsa-utils '
 
     echo "${YELLOW}Installing dependencies...${RC}"
     if [ "$PACKAGER" = "pacman" ]; then
