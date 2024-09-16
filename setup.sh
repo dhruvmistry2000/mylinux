@@ -44,7 +44,7 @@ checkEnv() {
     done
 
     ## Check Package Handler
-    PACKAGEMANAGER='nala apt dnf yum pacman zypper emerge xbps-install nix-env'
+    PACKAGEMANAGER='nala apt dnf yum pacman zypper emerge xbps-install'
     for pgm in $PACKAGEMANAGER; do
         if command_exists "$pgm"; then
             PACKAGER="$pgm"
@@ -121,14 +121,14 @@ installDepend() {
         ${SUDO_CMD} ${PACKAGER} -v app-shells/bash app-shells/bash-completion app-arch/tar sys-apps/bat app-text/tree app-text/multitail app-misc/fastfetch
     elif [ "$PACKAGER" = "xbps-install" ]; then
         ${SUDO_CMD} ${PACKAGER} -v ${DEPENDENCIES}
-    elif [ "$PACKAGER" = "nix-env" ]; then
-        ${SUDO_CMD} ${PACKAGER} -iA nixos.bash nixos.bash-completion nixos.gnutar nixos.bat nixos.tree nixos.multitail nixos.fastfetch  nixos.pkgs.starship
     elif [[ "$PACKAGER" == "dnf" ]]; then
         ${SUDO_CMD} ${PACKAGER} install -y ${DEPENDENCIES}
     else
         ${SUDO_CMD} ${PACKAGER} install -yq ${DEPENDENCIES}
     fi
+}
 
+installFont() {
     # Check to see if the FiraCode Nerd Font is installed (Change this to whatever font you would like)
     FONT_NAME="Hack"
     if fc-list :family | grep -iq "$FONT_NAME"; then
@@ -180,3 +180,4 @@ checkEnv
 installDepend
 moveConfigs
 setupXorg
+installFont
