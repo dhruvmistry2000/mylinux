@@ -1,0 +1,46 @@
+#! /bin/sh
+
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+
+# Check connected monitors
+PRIMARY_MONITOR="eDP-1"
+SECONDARY_MONITOR="HDMI-1-0"
+PRIMARY_WORKSPACES="1 2 3 4 5"
+SECONDARY_WORKSPACES="6 7 8 9"
+
+# Get connected monitors
+CONNECTED_MONITORS=$(xrandr --listmonitors | grep -oP '^\d+:\s+\K\S+')
+
+# Configure workspaces based on connected monitors
+if echo "$CONNECTED_MONITORS" | grep -q "$SECONDARY_MONITOR"; then
+    # Secondary monitor is connected
+    ./screen.sh
+    bspc monitor "$PRIMARY_MONITOR" -d $PRIMARY_WORKSPACES
+    bspc monitor "$SECONDARY_MONITOR" -d $SECONDARY_WORKSPACES
+else
+    # Only primary monitor is connected
+    bspc monitor "$PRIMARY_MONITOR" -d $PRIMARY_WORKSPACES
+fi
+bspc config border_width        1
+bspc config window_gap          12
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+
+#Autostart Apllication
+sxhkd &
+picom --config /home/dhruv/.config/picom/picom.conf &
+nitrogen --restore &
+dunst &
+polybar &
+
+#### BSPWM coloring ####
+bspc config normal_border_color               "#4c566a"
+bspc config active_border_color	              "#1e1e1e"
+bspc config focused_border_color	      "#5e81ac"
+bspc config presel_feedback_color	      "#5e81ac"
+bspc config urgent_border_color 	      "#dd2727"
+
