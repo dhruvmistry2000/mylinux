@@ -94,7 +94,7 @@ checkEnv() {
 
 installDepend() {
     ## Check for dependencies.
-    DEPENDENCIES='bash bash-completion tar xorg xdg-user-dirs xorg-xinit arandr bat tree multitail fastfetch wget unzip fontconfig bspwm dconf dunst kitty thunar thunar-volman thunar-archive-plugin nitrogen picom base-devel git pulseaudio pulseaudio-alsa pulseaudio-bluetooth ly ranger bluez bluez-utils brightnessctl htop xf86-video-intel npm python3 python3-pip libconfig dbus libev libx11 libxcb libxext libgl libegl libepoxy meson pcre2 pixman uthash xcb-util-image xcb-util-renderutil xorgproto cmake libxft libimlib2 libxinerama libxcb-res xorg-xev xorg-xbacklight alsa-utils rofi polybar'
+    DEPENDENCIES='bash bash-completion tar xorg xdg-user-dirs xorg-xinit arandr bat tree multitail fastfetch wget unzip fontconfig bspwm dconf dunst kitty nautilus thunar-volman thunar-archive-plugin nitrogen picom base-devel git pulseaudio pulseaudio-alsa pulseaudio-bluetooth ly ranger bluez bluez-utils brightnessctl htop xf86-video-intel npm python3 python3-pip libconfig dbus libev libx11 libxcb libxext libgl libegl libepoxy meson pcre2 pixman uthash xcb-util-image xcb-util-renderutil xorgproto cmake libxft libimlib2 libxinerama libxcb-res xorg-xev xorg-xbacklight alsa-utils rofi polybar'
 
     echo "${YELLOW}Installing dependencies...${RC}"
     if [ "$PACKAGER" = "pacman" ]; then
@@ -169,21 +169,6 @@ installDepend() {
         fi
     fi
 
-    # Give +x permission to bspwmrc and sxhkdrc files
-    chmod +x "$HOME/.config/bspwm/bspwmrc"
-    if [ $? -eq 0 ]; then
-        echo "${GREEN}Successfully gave +x permission to bspwmrc${RC}"
-    else
-        echo "${RED}Failed to give +x permission to bspwmrc${RC}"
-        exit 1
-    fi
-    chmod +x "$HOME/.config/sxhkd/sxhkdrc"
-    if [ $? -eq 0 ]; then
-        echo "${GREEN}Successfully gave +x permission to sxhkdrc${RC}"
-    else
-        echo "${RED}Failed to give +x permission to sxhkdrc${RC}"
-        exit 1
-    fi
 }
 
 installFont() {
@@ -237,10 +222,9 @@ installFont() {
         echo "${GREEN}'$FONT_NAME' installed successfully.${RC}"
     fi
 }
-
 moveConfigs() {
     # Define the source and target directories for config files
-    CONFIG_SRC_DIR="$GITPATH/configs"
+    CONFIG_SRC_DIR="$GITPATH/config"
     CONFIG_DEST_DIR="$HOME/.config"
 
     # Create the target directory if it doesn't exist
@@ -254,18 +238,34 @@ moveConfigs() {
 
     # Copy all config files from the source directory to the target directory
     for config in "$CONFIG_SRC_DIR"/*; do
-        # Check if it's a file
-        if [ -f "$config" ]; then
-            # Copy the file to the destination directory
-            cp "$config" "$CONFIG_DEST_DIR/"
+        # Check if it's a directory
+        if [ -d "$config" ]; then
+            # Copy the directory to the destination directory
+            cp -r "$config" "$CONFIG_DEST_DIR/"
             if [ $? -eq 0 ]; then
-                echo "${GREEN}Copied config file $(basename "$config") to $CONFIG_DEST_DIR${RC}"
+                echo "${GREEN}Copied config directory $(basename "$config") to $CONFIG_DEST_DIR${RC}"
             else
-                echo "${RED}Failed to copy config file $(basename "$config") to $CONFIG_DEST_DIR${RC}"
+                echo "${RED}Failed to copy config directory $(basename "$config") to $CONFIG_DEST_DIR${RC}"
                 exit 1
             fi
         fi
     done
+
+    # Give +x permission to bspwmrc and sxhkdrc files
+    chmod +x "$HOME/.config/bspwm/bspwmrc"
+    if [ $? -eq 0 ]; then
+        echo "${GREEN}Successfully gave +x permission to bspwmrc${RC}"
+    else
+        echo "${RED}Failed to give +x permission to bspwmrc${RC}"
+        exit 1
+    fi
+    chmod +x "$HOME/.config/sxhkd/sxhkdrc"
+    if [ $? -eq 0 ]; then
+        echo "${GREEN}Successfully gave +x permission to sxhkdrc${RC}"
+    else
+        echo "${RED}Failed to give +x permission to sxhkdrc${RC}"
+        exit 1
+    fi
 }
 
 copyWallpapers() {
