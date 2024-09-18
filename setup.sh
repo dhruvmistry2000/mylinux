@@ -44,7 +44,7 @@ checkEnv() {
     done
 
     ## Check Package Handler
-    PACKAGEMANAGER='nala apt dnf yum pacman zypper emerge xbps-install'
+    PACKAGEMANAGER='nala apt dnf pacman'
     for pgm in $PACKAGEMANAGER; do
         if command_exists "$pgm"; then
             PACKAGER="$pgm"
@@ -135,23 +135,7 @@ installDepend() {
             echo -e "${RED}Failed to install dependencies${RC}"
             exit 1
         fi
-    elif [ "$PACKAGER" = "emerge" ]; then
-        ${SUDO_CMD} ${PACKAGER} -v app-shells/bash app-shells/bash-completion app-arch/tar sys-apps/bat app-text/tree app-text/multitail app-misc/fastfetch
-        if [ $? -eq 0 ]; then
-            echo -e "${GREEN}Successfully installed dependencies${RC}"
-        else
-            echo -e "${RED}Failed to install dependencies${RC}"
-            exit 1
-        fi
-    elif [ "$PACKAGER" = "xbps-install" ]; then
-        ${SUDO_CMD} ${PACKAGER} -v ${DEPENDENCIES}
-        if [ $? -eq 0 ]; then
-            echo -e "${GREEN}Successfully installed dependencies${RC}"
-        else
-            echo -e "${RED}Failed to install dependencies${RC}"
-            exit 1
-        fi
-    elif [[ "$PACKAGER" == "dnf" ]]; then
+    elif [ "$PACKAGER" = "dnf" ]; then
         ${SUDO_CMD} ${PACKAGER} install -y ${DEPENDENCIES}
         if [ $? -eq 0 ]; then
             echo -e "${GREEN}Successfully installed dependencies${RC}"
@@ -168,7 +152,6 @@ installDepend() {
             exit 1
         fi
     fi
-
 }
 
 installFont() {
