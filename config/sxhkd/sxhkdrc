@@ -133,7 +133,7 @@ super + {Left,Down,Up,Right}
 
 #filemanager
 super + e 
-	nautilus
+	thunar
 
 #brave browser
 super + b
