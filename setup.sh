@@ -94,7 +94,17 @@ checkEnv() {
 
 installDepend() {
     ## Check for dependencies.
-    DEPENDENCIES='bash bash-completion tar xorg xdg-user-dirs xorg-xinit arandr bat tree multitail fastfetch wget unzip fontconfig bspwm dconf dunst kitty thunar thunar-volman thunar-archive-plugin nitrogen picom base-devel git pulseaudio pulseaudio-alsa pulseaudio-bluetooth ly yazi bluez bluez-utils brightnessctl htop xf86-video-intel npm python3 python3-pip libconfig dbus libev libx11 libxcb libxext libgl libegl libepoxy meson pcre2 pixman uthash xcb-util-image xcb-util-renderutil xorgproto cmake libxft libimlib2 libxinerama libxcb-res xorg-xev xorg-xbacklight alsa-utils kitty rofi polybar sxhkd tldr gparted'
+      ## Check for dependencies based on the package manager.
+    if [ "$PACKAGER" = "pacman" ]; then
+        DEPENDENCIES='bash bash-completion tar xorg xdg-user-dirs xorg-xinit arandr bat tree multitail fastfetch wget unzip fontconfig bspwm dconf dunst kitty nautilus thunar-volman thunar-archive-plugin nitrogen picom base-devel git pulseaudio pulseaudio-alsa pulseaudio-bluetooth ly yazi bluez bluez-utils brightnessctl htop xf86-video-intel npm python3 python3-pip libconfig dbus libev libx11 libxcb libxext libgl libegl libepoxy meson pcre2 pixman uthash xcb-util-image xcb-util-renderutil xorgproto cmake libxft libimlib2 libxinerama libxcb-res xorg-xev xorg-xbacklight alsa-utils kitty rofi polybar sxhkd tldr'
+    elif [ "$PACKAGER" = "nala" ] || [ "$PACKAGER" = "apt" ]; then
+        DEPENDENCIES='bspwm sxhkd xorg xorg-x11-server-Xorg xorg-x11-xinit xorg-x11-xutils xorg-x11-drv-intel picom kitty polybar rofi thunar thunar-archive-plugin thunar-volman nitrogen htop brightnessctl dunst unzip wget git build-essential cmake meson npm python3 python3-pip pulseaudio pulseaudio-utils pulseaudio-module-bluetooth dconf tldr fontconfig'
+    elif [ "$PACKAGER" = "dnf" ]; then
+        DEPENDENCIES='bspwm sxhkd xorg-x11-server xorg-x11-xinit xorg-x11-utils xorg-x11-drv-intel picom kitty polybar rofi thunar thunar-archive-plugin thunar-volman nitrogen htop brightnessctl dunst unzip wget git gcc cmake meson npm python3 python3-pip pulseaudio pulseaudio-utils pulseaudio-module-bluetooth dconf tldr fontconfig'
+    else
+        echo -e "${RED}Unsupported package manager: $PACKAGER${RC}"
+        exit 1
+    fi
 
     echo -e "${YELLOW}Installing dependencies...${RC}"
     if [ "$PACKAGER" = "pacman" ]; then
