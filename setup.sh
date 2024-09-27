@@ -6,7 +6,7 @@ YELLOW='\033[33m'
 GREEN='\033[32m'
 
 # Define the repository path and configuration file
-REPO_DIR="$HOME/mylinux"
+REPO_DIR="$HOME/Github/mylinux"
 REPO_URL="https://github.com/dhruvmistry2000/mylinux"
 
 # Check if the repository directory exists, create it if it doesn't
