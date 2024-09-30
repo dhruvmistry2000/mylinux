@@ -148,5 +148,5 @@ super + g
 	github-desktop
 
 #flameshot
-super + f 
+super + ctrl + f 
 	flameshot gui
