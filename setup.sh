@@ -266,7 +266,18 @@ copyWallpapers() {
     WALLPAPER_SRC_DIR="$GITPATH/wallpaper"
     WALLPAPER_DEST_DIR="$HOME/wallpaper"
 
-    # Copy the entire wallpapers directory to the home directory
+    # Check if the destination directory exists, if not, create it
+    if [ ! -d "$WALLPAPER_DEST_DIR" ]; then
+        mkdir -p "$WALLPAPER_DEST_DIR"
+        if [ $? -eq 0 ]; then
+            echo -e "${GREEN}Successfully created destination directory $WALLPAPER_DEST_DIR${RC}"
+        else
+            echo -e"${RED}Failed to create destination directory $WALLPAPER_DEST_DIR${RC}"
+            exit 1
+        fi
+    fi
+
+    # Copy the entire wallpapers directory to the destination directory
     cp -r "$WALLPAPER_SRC_DIR" "$WALLPAPER_DEST_DIR"
     if [ $? -eq 0 ]; then
         echo -e "${GREEN}Copied wallpapers directory to $WALLPAPER_DEST_DIR${RC}"
