@@ -22,20 +22,16 @@ else
     echo -e "${GREEN}Target directory $CONFIG_DEST_DIR already exists${RC}"
 fi
 
-# Copy all config files from the source directory to the target directory
-if [ ! -d "$CONFIG_DEST_DIR/bspwm" ] || [ ! -d "$CONFIG_DEST_DIR/sxhkd" ]; then
-    cp -r "$CONFIG_SRC_DIR"/* "$CONFIG_DEST_DIR/"
-    if [ $? -eq 0 ]; then
-        echo -e "${GREEN}Successfully copied config files to $CONFIG_DEST_DIR${RC}"
-    else
-        echo -e "${RED}Failed to copy config files to $CONFIG_DEST_DIR${RC}"
-        exit 1
-    fi
+# Sync all config files from the source directory to the target directory
+rsync -avz "$CONFIG_SRC_DIR/" "$CONFIG_DEST_DIR/"
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}Successfully synced config files to $CONFIG_DEST_DIR${RC}"
 else
-    echo -e "${GREEN}Config files already exist in $CONFIG_DEST_DIR${RC}"
+    echo -e "${RED}Failed to sync config files to $CONFIG_DEST_DIR${RC}"
+    exit 1
 fi
 
-# Give +x permission to bspwmrc and sxhkdrc files
+# Give +x permission to bspwmrc and sxhkdrc files if they don't already have it
 if [ ! -x "$CONFIG_DEST_DIR/bspwm/bspwmrc" ]; then
     chmod +x "$CONFIG_DEST_DIR/bspwm/bspwmrc"
     if [ $? -eq 0 ]; then
