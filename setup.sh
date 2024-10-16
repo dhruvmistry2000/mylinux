@@ -338,7 +338,9 @@ picom_animations() {
         echo "Failed to install the built binary"
         return 1
     fi
+
     # Clean up the build directory
+    cd ..
     if [ -d build ]; then
         rm -rf build
     fi
