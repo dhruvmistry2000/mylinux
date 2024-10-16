@@ -11,22 +11,22 @@ REPO_URL="https://github.com/dhruvmistry2000/mylinux"
 
 # Check if the repository directory exists, create it if it doesn't
 if [ -d "$REPO_DIR" ]; then
-    echo -e "${YELLOW}Pulling mylinux repository at: $REPO_DIR${RC}"
+    printf "${YELLOW}Pulling mylinux repository at: $REPO_DIR${RC}\n"
     cd "$REPO_DIR"
     git pull
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}Successfully pulled mylinux repository${RC}"
+        printf "${GREEN}Successfully pulled mylinux repository${RC}\n"
     else
-        echo -e "${RED}Failed to pull mylinux repository${RC}"
+        printf "${RED}Failed to pull mylinux repository${RC}\n"
         exit 1
     fi
 else
-    echo -e "${YELLOW}Cloning mylinux repository into: $REPO_DIR${RC}"
+    printf "${YELLOW}Cloning mylinux repository into: $REPO_DIR${RC}\n"
     git clone "$REPO_URL" "$REPO_DIR"
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}Successfully cloned mylinux repository${RC}"
+        printf "${GREEN}Successfully cloned mylinux repository${RC}\n"
     else
-        echo -e"${RED}Failed to clone mylinux repository${RC}"
+        printf "${RED}Failed to clone mylinux repository${RC}\n"
         exit 1
     fi
 fi
@@ -46,7 +46,7 @@ checkEnv() {
     REQUIREMENTS='curl groups sudo'
     for req in $REQUIREMENTS; do
         if ! command_exists "$req"; then
-            echo -e "${RED}To run me, you need: $REQUIREMENTS${RC}"
+            printf "${RED}To run me, you need: $REQUIREMENTS${RC}\n"
             exit 1
         fi
     done
@@ -56,13 +56,13 @@ checkEnv() {
     for pgm in $PACKAGEMANAGER; do
         if command_exists "$pgm"; then
             PACKAGER="$pgm"
-            echo -e "${GREEN}Using $pgm${RC}"
+            printf "${GREEN}Using $pgm${RC}\n"
             break
         fi
     done
 
     if [ -z "$PACKAGER" ]; then
-        echo -e "${RED}Can't find a supported package manager${RC}"
+        printf "${RED}Can't find a supported package manager${RC}\n"
         exit 1
     fi
 
@@ -74,12 +74,12 @@ checkEnv() {
         SUDO_CMD="su -c"
     fi
 
-    echo -e "${GREEN}Using $SUDO_CMD as privilege escalation software${RC}"
+    printf "${GREEN}Using $SUDO_CMD as privilege escalation software${RC}\n"
 
     ## Check if the current directory is writable.
     GITPATH=$(dirname "$(realpath "$0")")
     if [ ! -w "$GITPATH" ]; then
-        echo -e "${RED}Can't write to $GITPATH${RC}"
+        printf "${RED}Can't write to $GITPATH${RC}\n"
         exit 1
     fi
 
@@ -88,14 +88,14 @@ checkEnv() {
     for sug in $SUPERUSERGROUP; do
         if groups | grep -q "$sug"; then
             SUGROUP="$sug"
-            echo -e "${GREEN}Super user group $SUGROUP${RC}"
+            printf "${GREEN}Super user group $SUGROUP${RC}\n"
             break
         fi
     done
 
     ## Check if member of the sudo group.
     if ! groups | grep -q "$SUGROUP"; then
-        echo -e "${RED}You need to be a member of the sudo group to run me!${RC}"
+        printf "${RED}You need to be a member of the sudo group to run me!${RC}\n"
         exit 1
     fi
 }
@@ -110,63 +110,63 @@ installDepend() {
     elif [ "$PACKAGER" = "dnf" ]; then
         DEPENDENCIES='bspwm sxhkd btop picom xarchiver flameshot kitty polybar rofi thunar thunar-archive-plugin thunar-volman nitrogen htop brightnessctl dunst git gcc cmake meson npm python3 python3-pip dconf tldr fontconfig nwg-look fzf'
     else
-        echo -e "${RED}Unsupported package manager: $PACKAGER${RC}"
+        printf "${RED}Unsupported package manager: $PACKAGER${RC}\n"
         exit 1
     fi
 
-    echo -e "${YELLOW}Installing dependencies...${RC}"
+    printf "${YELLOW}Installing dependencies...${RC}\n"
     if [ "$PACKAGER" = "pacman" ]; then
         if ! command_exists yay && ! command_exists paru; then
-            echo -e "${YELLOW}Installing yay as AUR helper...${RC}"
+            printf "${YELLOW}Installing yay as AUR helper...${RC}\n"
             ${SUDO_CMD} ${PACKAGER} --noconfirm -S base-devel
             cd /opt && ${SUDO_CMD} git clone https://aur.archlinux.org/yay-git.git && ${SUDO_CMD} chown -R "${USER}:${USER}" ./yay-git
             cd yay-git && makepkg --noconfirm -si
             if [ $? -eq 0 ]; then
-                echo -e "${GREEN}Successfully installed yay${RC}"
+                printf "${GREEN}Successfully installed yay${RC}\n"
             else
-                echo -e "${RED}Failed to install yay${RC}"
+                printf "${RED}Failed to install yay${RC}\n"
                 exit 1
             fi
         else
-            echo -e "${GREEN}AUR helper already installed${RC}"
+            printf "${GREEN}AUR helper already installed${RC}\n"
         fi
         if command_exists yay; then
             AUR_HELPER="yay"
         elif command_exists paru; then
             AUR_HELPER="paru"
         else
-            echo -e "${RED}No AUR helper found. Please install yay or paru.${RC}"
+            printf "${RED}No AUR helper found. Please install yay or paru.${RC}\n"
             exit 1
         fi
         ${AUR_HELPER} --noconfirm -S ${DEPENDENCIES}
         if [ $? -eq 0 ]; then
-            echo -e "${GREEN}Successfully installed dependencies${RC}"
+            printf "${GREEN}Successfully installed dependencies${RC}\n"
         else
-            echo -e "${RED}Failed to install dependencies${RC}"
+            printf "${RED}Failed to install dependencies${RC}\n"
             exit 1
         fi
     elif [ "$PACKAGER" = "nala" ]; then
         ${SUDO_CMD} ${PACKAGER} install -y ${DEPENDENCIES}
         if [ $? -eq 0 ]; then
-            echo -e "${GREEN}Successfully installed dependencies${RC}"
+            printf "${GREEN}Successfully installed dependencies${RC}\n"
         else
-            echo -e "${RED}Failed to install dependencies${RC}"
+            printf "${RED}Failed to install dependencies${RC}\n"
             exit 1
         fi
     elif [ "$PACKAGER" = "dnf" ]; then
         ${SUDO_CMD} ${PACKAGER} install -y ${DEPENDENCIES}
         if [ $? -eq 0 ]; then
-            echo -e "${GREEN}Successfully installed dependencies${RC}"
+            printf "${GREEN}Successfully installed dependencies${RC}\n"
         else
-            echo -e "${RED}Failed to install dependencies${RC}"
+            printf "${RED}Failed to install dependencies${RC}\n"
             exit 1
         fi
     else
         ${SUDO_CMD} ${PACKAGER} install -yq ${DEPENDENCIES}
         if [ $? -eq 0 ]; then
-            echo -e "${GREEN}Successfully installed dependencies${RC}"
+            printf "${GREEN}Successfully installed dependencies${RC}\n"
         else
-            echo -e "${RED}Failed to install dependencies${RC}"
+            printf "${RED}Failed to install dependencies${RC}\n"
             exit 1
         fi
     fi
@@ -176,51 +176,51 @@ installFont() {
     # Check to see if the FiraCode Nerd Font is installed (Change this to whatever font you would like)
     FONT_NAME="Hack"
     if fc-list :family | grep -iq "$FONT_NAME"; then
-        echo -e "${GREEN}Font '$FONT_NAME' is installed.${RC}"
+        printf "${GREEN}Font '$FONT_NAME' is installed.${RC}\n"
     else
-        echo -e "${YELLOW}Installing font '$FONT_NAME'${RC}"
+        printf "${YELLOW}Installing font '$FONT_NAME'${RC}\n"
         # Change this URL to correspond with the correct font
         FONT_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.3/Hack.zip"
         FONT_DIR="$HOME/.local/share/fonts"
         wget $FONT_URL -O ${FONT_NAME}.zip
         if [ $? -eq 0 ]; then
-            echo -e "${GREEN}Successfully downloaded font '$FONT_NAME'${RC}"
+            printf "${GREEN}Successfully downloaded font '$FONT_NAME'${RC}\n"
         else
-            echo -e "${RED}Failed to download font '$FONT_NAME'${RC}"
+            printf "${RED}Failed to download font '$FONT_NAME'${RC}\n"
             exit 1
         fi
         unzip ${FONT_NAME}.zip -d $FONT_NAME
         if [ $? -eq 0 ]; then
-            echo -e "${GREEN}Successfully unzipped font '$FONT_NAME'${RC}"
+            printf "${GREEN}Successfully unzipped font '$FONT_NAME'${RC}\n"
         else
-            echo -e "${RED}Failed to unzip font '$FONT_NAME'${RC}"
+            printf "${RED}Failed to unzip font '$FONT_NAME'${RC}\n"
             exit 1
         fi
         mkdir -p $FONT_DIR
         mv ${FONT_NAME}/*.ttf $FONT_DIR/
         if [ $? -eq 0 ]; then
-            echo -e "${GREEN}Successfully moved font files to $FONT_DIR${RC}"
+            printf "${GREEN}Successfully moved font files to $FONT_DIR${RC}\n"
         else
-            echo -e "${RED}Failed to move font files to $FONT_DIR${RC}"
+            printf "${RED}Failed to move font files to $FONT_DIR${RC}\n"
             exit 1
         fi
         # Update the font cache
         fc-cache -fv
         if [ $? -eq 0 ]; then
-            echo -e "${GREEN}Successfully updated the font cache${RC}"
+            printf "${GREEN}Successfully updated the font cache${RC}\n"
         else
-            echo -e "${RED}Failed to update the font cache${RC}"
+            printf "${RED}Failed to update the font cache${RC}\n"
             exit 1
         fi
         # delete the files created from this
         rm -rf ${FONT_NAME} ${FONT_NAME}.zip
         if [ $? -eq 0 ]; then
-            echo -e "${GREEN}Successfully deleted temporary font files${RC}"
+            printf "${GREEN}Successfully deleted temporary font files${RC}\n"
         else
-            echo -e "${RED}Failed to delete temporary font files${RC}"
+            printf "${RED}Failed to delete temporary font files${RC}\n"
             exit 1
         fi
-        echo -e "${GREEN}'$FONT_NAME' installed successfully.${RC}"
+        printf "${GREEN}'$FONT_NAME' installed successfully.${RC}\n"
     fi
 }
 moveConfigs() {
@@ -231,9 +231,9 @@ moveConfigs() {
     # Create the target directory if it doesn't exist
     mkdir -p "$CONFIG_DEST_DIR"
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}Successfully created target directory $CONFIG_DEST_DIR${RC}"
+        printf "${GREEN}Successfully created target directory $CONFIG_DEST_DIR${RC}\n"
     else
-        echo -e "${RED}Failed to create target directory $CONFIG_DEST_DIR${RC}"
+        printf "${RED}Failed to create target directory $CONFIG_DEST_DIR${RC}\n"
         exit 1
     fi
 
@@ -244,9 +244,9 @@ moveConfigs() {
             # Copy the directory to the destination directory
             cp -r "$config" "$CONFIG_DEST_DIR/"
             if [ $? -eq 0 ]; then
-                echo -e "${GREEN}Copied config directory $(basename "$config") to $CONFIG_DEST_DIR${RC}"
+                printf "${GREEN}Copied config directory $(basename "$config") to $CONFIG_DEST_DIR${RC}\n"
             else
-                echo -e "${RED}Failed to copy config directory $(basename "$config") to $CONFIG_DEST_DIR${RC}"
+                printf "${RED}Failed to copy config directory $(basename "$config") to $CONFIG_DEST_DIR${RC}\n"
                 exit 1
             fi
         fi
@@ -255,16 +255,16 @@ moveConfigs() {
     # Give +x permission to bspwmrc and sxhkdrc files
     chmod +x "$HOME/.config/bspwm/bspwmrc"
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}Successfully gave +x permission to bspwmrc${RC}"
+        printf "${GREEN}Successfully gave +x permission to bspwmrc${RC}\n"
     else
-        echo -e "${RED}Failed to give +x permission to bspwmrc${RC}"
+        printf "${RED}Failed to give +x permission to bspwmrc${RC}\n"
         exit 1
     fi
     chmod +x "$HOME/.config/sxhkd/sxhkdrc"
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}Successfully gave +x permission to sxhkdrc${RC}"
+        printf "${GREEN}Successfully gave +x permission to sxhkdrc${RC}\n"
     else
-        echo -e "${RED}Failed to give +x permission to sxhkdrc${RC}"
+        printf "${RED}Failed to give +x permission to sxhkdrc${RC}\n"
         exit 1
     fi
 }
@@ -278,9 +278,9 @@ copyWallpapers() {
     if [ ! -d "$WALLPAPER_DEST_DIR" ]; then
         mkdir -p "$WALLPAPER_DEST_DIR"
         if [ $? -eq 0 ]; then
-            echo -e "${GREEN}Successfully created destination directory $WALLPAPER_DEST_DIR${RC}"
+            printf "${GREEN}Successfully created destination directory $WALLPAPER_DEST_DIR${RC}\n"
         else
-            echo -e"${RED}Failed to create destination directory $WALLPAPER_DEST_DIR${RC}"
+            printf"${RED}Failed to create destination directory $WALLPAPER_DEST_DIR${RC}\n"
             exit 1
         fi
     fi
@@ -288,9 +288,9 @@ copyWallpapers() {
     # Copy the entire wallpapers directory to the destination directory
     cp -r "$WALLPAPER_SRC_DIR"/* "$WALLPAPER_DEST_DIR"
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}Copied wallpapers directory to $WALLPAPER_DEST_DIR${RC}"
+        printf "${GREEN}Copied wallpapers directory to $WALLPAPER_DEST_DIR${RC}\n"
     else
-        echo -e"${RED}Failed to copy wallpapers directory to $WALLPAPER_DEST_DIR${RC}"
+        printf"${RED}Failed to copy wallpapers directory to $WALLPAPER_DEST_DIR${RC}\n"
         exit 1
     fi
 }
@@ -301,9 +301,9 @@ setupXorg() {
     echo "sxhkd &" > "$XINITRC"
     echo "exec bspwm" >> "$XINITRC"
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}Created $XINITRC to start xorg with bspwm and sxhkd${RC}"
+        printf "${GREEN}Created $XINITRC to start xorg with bspwm and sxhkd${RC}\n"
     else
-        echo -e "${RED}Failed to create $XINITRC to start xorg with bspwm and sxhkd${RC}"
+        printf "${RED}Failed to create $XINITRC to start xorg with bspwm and sxhkd${RC}\n"
         exit 1
     fi
 }
@@ -313,29 +313,29 @@ picom_animations() {
     mkdir -p build
     if [ ! -d build/picom ]; then
         if ! git clone https://github.com/FT-Labs/picom.git build/picom; then
-            echo "Failed to clone the repository"
+            printf "Failed to clone the repository\n"
             return 1
         fi
     else
-        echo "Repository already exists, skipping clone"
+        printf "Repository already exists, skipping clone\n"
     fi
 
-    cd build/picom || { echo "Failed to change directory to picom"; return 1; }
+    cd build/picom || { printf "Failed to change directory to picom"; return 1; }
 
     # Build the project
     if ! meson setup --buildtype=release build; then
-        echo "Meson setup failed"
+        printf "Meson setup failed\n"
         return 1
     fi
 
     if ! ninja -C build; then
-        echo "Ninja build failed"
+        printf "Ninja build failed\n"
         return 1
     fi
 
     # Install the built binary
     if ! sudo ninja -C build install; then
-        echo "Failed to install the built binary"
+        printf "Failed to install the built binary\n"
         return 1
     fi
 
@@ -345,7 +345,7 @@ picom_animations() {
         rm -rf build
     fi
 
-    echo "Picom animations installed successfully"
+    printf "Picom animations installed successfully\n"
 }
 
 checkEnv
