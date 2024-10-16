@@ -302,9 +302,9 @@ setupXorg() {
 
 picom_animations() {
     # Clone the repository in the home/build directory
-    mkdir -p ~/build
-    if [ ! -d ~/build/picom ]; then
-        if ! git clone https://github.com/FT-Labs/picom.git ~/build/picom; then
+    mkdir -p build
+    if [ ! -d build/picom ]; then
+        if ! git clone https://github.com/FT-Labs/picom.git build/picom; then
             echo "Failed to clone the repository"
             return 1
         fi
@@ -312,7 +312,7 @@ picom_animations() {
         echo "Repository already exists, skipping clone"
     fi
 
-    cd ~/build/picom || { echo "Failed to change directory to picom"; return 1; }
+    cd build/picom || { echo "Failed to change directory to picom"; return 1; }
 
     # Build the project
     if ! meson setup --buildtype=release build; then
@@ -330,6 +330,9 @@ picom_animations() {
         echo "Failed to install the built binary"
         return 1
     fi
+
+    # Clean up the build directory
+    rm -rf build
 
     echo "Picom animations installed successfully"
 }
