@@ -4,6 +4,24 @@ This project aims to simplify the process of setting up a Linux environment with
 ### Overview Image
 ![Project Overview](image.png)
 
+### Installed Packages
+The following are the important packages that are installed as part of this project:
+- bspwm
+- sxhkd
+- picom
+- flameshot
+- kitty
+- polybar
+- rofi
+- thunar
+- nitrogen
+- htop
+- brightnessctl
+- dunst
+- git
+- dconf
+- nwg-look
+
 ### Installation
 To install and set up the project, run the following command in your terminal:
 ```bash
