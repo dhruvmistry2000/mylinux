@@ -278,7 +278,7 @@ copyWallpapers() {
     fi
 
     # Copy the entire wallpapers directory to the destination directory
-    cp -r "$WALLPAPER_SRC_DIR" "$WALLPAPER_DEST_DIR"
+    cp -r "$WALLPAPER_SRC_DIR"/* "$WALLPAPER_DEST_DIR"
     if [ $? -eq 0 ]; then
         echo -e "${GREEN}Copied wallpapers directory to $WALLPAPER_DEST_DIR${RC}"
     else
