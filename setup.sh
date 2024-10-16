@@ -138,7 +138,7 @@ installDepend() {
             printf "${RED}No AUR helper found. Please install yay or paru.${RC}\n"
             exit 1
         fi
-        ${AUR_HELPER} --noconfirm -S "${DEPENDENCIES}"
+        ${AUR_HELPER} --noconfirm -S ${DEPENDENCIES}
         if [ $? -eq 0 ]; then
             printf "${GREEN}Successfully installed dependencies${RC}\n"
         else
