@@ -170,6 +170,37 @@ installDepend() {
             exit 1
         fi
     fi
+
+    ## Enable ly
+    if command_exists ly; then
+        printf "${GREEN}ly already installed${RC}\n"
+    else
+        printf "${YELLOW}Installing ly...${RC}\n"
+        if [ "$PACKAGER" = "pacman" ]; then
+            ${SUDO_CMD} ${PACKAGER} --noconfirm -S ly
+        elif [ "$PACKAGER" = "nala" ] || [ "$PACKAGER" = "apt" ]; then
+            ${SUDO_CMD} ${PACKAGER} install -y ly
+        elif [ "$PACKAGER" = "dnf" ]; then
+            ${SUDO_CMD} ${PACKAGER} install -y ly
+        else
+            printf "${RED}Unsupported package manager: $PACKAGER${RC}\n"
+            exit 1
+        fi
+        if [ $? -eq 0 ]; then
+            printf "${GREEN}Successfully installed ly${RC}\n"
+        else
+            printf "${RED}Failed to install ly${RC}\n"
+            exit 1
+        fi
+    fi
+
+    sudo systemctl enable ly
+    if [ $? -eq 0 ]; then
+        printf "${GREEN}Successfully enabled ly${RC}\n"
+    else
+        printf "${RED}Failed to enable ly${RC}\n"
+        exit 1
+    fi
 }
 
 installFont() {
