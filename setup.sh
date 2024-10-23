@@ -106,7 +106,7 @@ installDepend() {
     if [ "$PACKAGER" = "pacman" ]; then
         DEPENDENCIES='arandr xorg bat btop tree xarchiver flameshot fastfetch wget unzip bspwm dconf dunst kitty nautilus thunar-volman thunar-archive-plugin nitrogen picom git ly yazi bluez bluez-utils brightnessctl htop npm python3-pip libconfig dbus libev meson pcre2 pixman uthash xcb-util-image xcb-util-renderutil cmake libxft libimlib2 libxinerama libxcb-res xorg-xev xorg-xbacklight alsa-utils rofi polybar sxhkd tldr nwg-look fzf materia-gtk-theme'
     elif [ "$PACKAGER" = "nala" ] || [ "$PACKAGER" = "apt" ]; then
-        DEPENDENCIES='bspwm xorg sxhkd btop picom xarchiver flameshot kitty polybar rofi thunar thunar-archive-plugin thunar-volman nitrogen htop brightnessctl dunst git cmake meson npm python3 python3-pip dconf-cli tldr fontconfig nwg-look fzf materia-gtk-theme'
+        DEPENDENCIES='bspwm xorg sxhkd btop picom xarchiver flameshot kitty polybar rofi thunar thunar-archive-plugin thunar-volman nitrogen htop brightnessctl dunst git cmake meson npm python3 python3-pip  fontconfig fzf materia-gtk-theme'
     elif [ "$PACKAGER" = "dnf" ]; then
         DEPENDENCIES='bspwm xorg sxhkd btop picom xarchiver flameshot kitty polybar rofi thunar thunar-archive-plugin thunar-volman nitrogen htop brightnessctl dunst git gcc cmake meson npm python3 python3-pip dconf tldr fontconfig nwg-look fzf materia-gtk-theme'
     else
