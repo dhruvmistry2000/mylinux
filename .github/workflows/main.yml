@@ -4,7 +4,9 @@ on: [push, pull_request]
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: |
+      ubuntu-latest
+      fedora-latest
     
     steps:
     - name: Checkout repository
