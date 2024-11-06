@@ -1,0 +1,25 @@
+name: Bashism Check
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-bashism:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Check for bashism
+        run: |
+          #!/bin/bash
+          files=$(find . -type f -name "*.sh")
+          for file in $files; do
+            checkbashisms "$file"
+            if [ $? -ne 0 ]; then
+              echo "Bashism found in $file"
+              exit 1
+            fi
+          done
