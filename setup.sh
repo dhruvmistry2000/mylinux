@@ -298,32 +298,6 @@ moveConfigs() {
     fi
 }
 
-copyWallpapers() {
-    # Define the source and target directories for wallpapers
-    WALLPAPER_SRC_DIR="$GITPATH/wallpaper"
-    WALLPAPER_DEST_DIR="$HOME/wallpaper"
-
-    # Check if the destination directory exists, if not, create it
-    if [ ! -d "$WALLPAPER_DEST_DIR" ]; then
-        mkdir -p "$WALLPAPER_DEST_DIR"
-        if [ $? -eq 0 ]; then
-            printf "${GREEN}Successfully created destination directory $WALLPAPER_DEST_DIR${RC}\n"
-        else
-            printf"${RED}Failed to create destination directory $WALLPAPER_DEST_DIR${RC}\n"
-            exit 1
-        fi
-    fi
-
-    # Copy the entire wallpapers directory to the destination directory
-    cp -r "$WALLPAPER_SRC_DIR"/* "$WALLPAPER_DEST_DIR"
-    if [ $? -eq 0 ]; then
-        printf "${GREEN}Copied wallpapers directory to $WALLPAPER_DEST_DIR${RC}\n"
-    else
-        printf"${RED}Failed to copy wallpapers directory to $WALLPAPER_DEST_DIR${RC}\n"
-        exit 1
-    fi
-}
-
 setupXorg() {
     # Create .xinitrc file to start xorg with bspwm and sxhkd
     XINITRC="$HOME/.xinitrc"
@@ -380,7 +354,6 @@ picom_animations() {
 checkEnv
 installDepend
 moveConfigs
-copyWallpapers
 setupXorg
 installFont
 picom_animations
