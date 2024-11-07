@@ -104,11 +104,11 @@ installDepend() {
     ## Check for dependencies.
       ## Check for dependencies based on the package manager.
     if [ "$PACKAGER" = "pacman" ]; then
-        DEPENDENCIES='arandr xorg bat btop tree xarchiver flameshot fastfetch wget unzip bspwm dconf dunst kitty nautilus thunar-volman thunar-archive-plugin nitrogen picom git ly yazi bluez bluez-utils brightnessctl htop npm python3-pip libconfig dbus libev meson pcre2 pixman uthash xcb-util-image xcb-util-renderutil cmake libxft libimlib2 libxinerama libxcb-res xorg-xev xorg-xbacklight alsa-utils rofi polybar sxhkd tldr nwg-look fzf materia-gtk-theme'
+        DEPENDENCIES='arandr xorg ntfs-3g bat btop tree xarchiver flameshot fastfetch wget nvtop unzip bspwm dconf dunst kitty nautilus thunar-volman thunar-archive-plugin nitrogen picom git ly yazi bluez bluez-utils brightnessctl htop npm python3-pip libconfig dbus libev meson pcre2 pixman uthash xcb-util-image xcb-util-renderutil cmake libxft libimlib2 libxinerama libxcb-res xorg-xev xorg-xbacklight alsa-utils rofi polybar sxhkd tldr nwg-look fzf materia-gtk-theme'
     elif [ "$PACKAGER" = "nala" ] || [ "$PACKAGER" = "apt" ]; then
-        DEPENDENCIES='bspwm xorg sxhkd btop picom xarchiver flameshot kitty polybar rofi thunar thunar-archive-plugin thunar-volman nitrogen htop brightnessctl dunst git cmake meson npm python3 python3-pip  fontconfig fzf materia-gtk-theme'
+        DEPENDENCIES='bspwm xorg sxhkd btop picom xarchiver flameshot kitty polybar rofi thunar nvtop thunar-archive-plugin thunar-volman nitrogen htop brightnessctl dunst git cmake meson npm python3 python3-pip  fontconfig fzf materia-gtk-theme'
     elif [ "$PACKAGER" = "dnf" ]; then
-        DEPENDENCIES='bspwm xorg sxhkd btop picom xarchiver flameshot kitty polybar rofi thunar thunar-archive-plugin thunar-volman nitrogen htop brightnessctl dunst git gcc cmake meson npm python3 python3-pip dconf tldr fontconfig nwg-look fzf materia-gtk-theme'
+        DEPENDENCIES='bspwm xorg sxhkd btop picom xarchiver flameshot kitty polybar rofi thunar nvtop thunar-archive-plugin thunar-volman nitrogen htop brightnessctl dunst git gcc cmake meson npm python3 python3-pip dconf tldr fontconfig nwg-look fzf materia-gtk-theme'
     else
         printf "${RED}Unsupported package manager: $PACKAGER${RC}\n"
         exit 1
@@ -298,32 +298,6 @@ moveConfigs() {
     fi
 }
 
-copyWallpapers() {
-    # Define the source and target directories for wallpapers
-    WALLPAPER_SRC_DIR="$GITPATH/wallpaper"
-    WALLPAPER_DEST_DIR="$HOME/wallpaper"
-
-    # Check if the destination directory exists, if not, create it
-    if [ ! -d "$WALLPAPER_DEST_DIR" ]; then
-        mkdir -p "$WALLPAPER_DEST_DIR"
-        if [ $? -eq 0 ]; then
-            printf "${GREEN}Successfully created destination directory $WALLPAPER_DEST_DIR${RC}\n"
-        else
-            printf"${RED}Failed to create destination directory $WALLPAPER_DEST_DIR${RC}\n"
-            exit 1
-        fi
-    fi
-
-    # Copy the entire wallpapers directory to the destination directory
-    cp -r "$WALLPAPER_SRC_DIR"/* "$WALLPAPER_DEST_DIR"
-    if [ $? -eq 0 ]; then
-        printf "${GREEN}Copied wallpapers directory to $WALLPAPER_DEST_DIR${RC}\n"
-    else
-        printf"${RED}Failed to copy wallpapers directory to $WALLPAPER_DEST_DIR${RC}\n"
-        exit 1
-    fi
-}
-
 setupXorg() {
     # Create .xinitrc file to start xorg with bspwm and sxhkd
     XINITRC="$HOME/.xinitrc"
@@ -385,7 +359,6 @@ picom_animations() {
 checkEnv
 installDepend
 moveConfigs
-copyWallpapers
 setupXorg
 installFont
 picom_animations
