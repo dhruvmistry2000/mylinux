@@ -103,8 +103,6 @@
     frame_width = 3
 
     # Defines color of the frame around the notification window.
-    frame_color = "#aaaaaa"
-
     # Size of gap to display between notifications - requires a compositor.
     # If value is greater than 0, separator_height will be ignored and a border
     # of size frame_width will be drawn around each notification instead.
@@ -136,7 +134,7 @@
 
     ### Text ###
 
-    font = Monospace 8
+    font = Hack Nerd Font 8
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -484,3 +482,19 @@
 #    set_stack_tag = "volume"
 #
 # vim: ft=cfg
+[global]
+frame_color = "#89b4fa"
+separator_color= frame
+
+[urgency_low]
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+
+[urgency_normal]
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+
+[urgency_critical]
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+frame_color = "#fab387"
