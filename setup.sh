@@ -355,6 +355,14 @@ picom_animations() {
         printf "Picom is already installed\n"
     fi
 }
+installMyBashConfig() {
+    curl -sSL https://raw.githubusercontent.com/dhruvmistry2000/mybash/master/setup.sh | bash
+    if [ $? -eq 0 ]; then
+        printf "${GREEN}My Bash configuration installed successfully!${RC}\n"
+    else
+        printf "${RED}Failed to install My Bash configuration.${RC}\n"
+    fi
+}
 
 checkEnv
 installDepend
@@ -362,3 +370,4 @@ moveConfigs
 setupXorg
 installFont
 picom_animations
+installMyBashConfig
