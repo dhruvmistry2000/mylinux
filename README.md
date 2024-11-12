@@ -28,6 +28,5 @@ The following key packages are installed as part of this project:
 # Installation Instructions
 To install and configure the project, execute the following command in your terminal:
 ```bash
-curl -sSL https://raw.githubusercontent.com/dhruvmistry2000/mylinux/master/setup.
-sh | bash
+curl -sSL https://raw.githubusercontent.com/dhruvmistry2000/mylinux/master/setup.sh | bash
 ```
