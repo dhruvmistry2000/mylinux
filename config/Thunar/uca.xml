@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal Here</name>
+	<submenu></submenu>
+	<unique-id>1726745204282990-1</unique-id>
+	<command>exo-open --working-directory %f --launch kitty</command>
+	<description>Example for a custom action</description>
+	<range></range>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+<action>
+	<icon>vscode</icon>
+	<name>Open in VS Code</name>
+	<submenu></submenu>
+	<unique-id>1730958078752900-2</unique-id>
+	<command>exo-open --working-directory %f --launch code %f</command>
+	<description>Open the selected folder in VS Code</description>
+	<range>*</range>
+	<patterns>*</patterns>
+</action>
+</actions>
