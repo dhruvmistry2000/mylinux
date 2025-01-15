@@ -373,6 +373,7 @@ copyVimrc() {
 }
 
 
+
 checkEnv
 installDepend
 moveConfigs
@@ -381,3 +382,6 @@ installFont
 picom_animations
 installMyBashConfig
 copyVimrc
+
+git clone https://github.com/ChrisTitusTech/nord-background wallpapers
+echo "Repository cloned into 'wallpaper' directory.
