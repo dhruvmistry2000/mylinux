@@ -1,4 +1,4 @@
-# Project Description
+# Mylinux
 
 
 This project provides a streamlined approach to setting up a customizable Linux environment tailored for developers and power users. It features scripts that automate the cloning of the project repository, verify system dependencies, and install a curated list of essential packages based on the detected package manager. The project is designed to work seamlessly with various package managers, including pacman, nala, apt, and dnf, ensuring broad compatibility across different Linux distributions.
