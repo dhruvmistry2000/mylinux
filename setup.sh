@@ -372,6 +372,16 @@ copyVimrc() {
     fi
 }
 
+wallpaper() {
+    if [ -f wallpaper.sh ]; then
+        sudo chmod +x wallpaper.sh
+        ./wallpaper.sh
+        printf "${GREEN}Wallpapers downloaded successfully!${RC}
+    else
+        printf "${RED}wallpaper.sh not found.${RC}\n"
+    fi
+}
+
 checkEnv
 installDepend
 moveConfigs
@@ -380,3 +390,4 @@ installFont
 picom_animations
 installMyBashConfig
 copyVimrc
+wallpaper
