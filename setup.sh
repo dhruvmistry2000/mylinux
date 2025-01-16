@@ -376,11 +376,12 @@ wallpaper() {
     if [ -f wallpaper.sh ]; then
         sudo chmod +x wallpaper.sh
         ./wallpaper.sh
-        printf "${GREEN}Wallpapers downloaded successfully!${RC}
+        printf "${GREEN}Wallpapers downloaded successfully!${RC}\n"
     else
         printf "${RED}wallpaper.sh not found.${RC}\n"
     fi
 }
+    
 
 checkEnv
 installDepend
