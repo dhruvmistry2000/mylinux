@@ -4,7 +4,7 @@
 
 #powermenu
 super + z
-	/home/dhruv/.config/rofi/powermenu.sh
+	$HOME/.config/rofi/powermenu.sh
 # terminal emulator
 super + Return
 	kitty

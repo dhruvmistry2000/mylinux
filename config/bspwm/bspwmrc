@@ -20,7 +20,8 @@ bspc config gapless_monocle true
 
 #Autostart Apllication
 sxhkd &
-picom --config /home/dhruv/.config/picom/picom.conf &
+# Start of Selection
+picom --config $HOME/.config/picom/picom.conf &
 nitrogen --restore &
 dunst &
 polybar &
