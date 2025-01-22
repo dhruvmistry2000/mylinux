@@ -29,3 +29,19 @@ To install and configure the project, execute the following command in your term
 ```bash
 curl -sSL https://raw.githubusercontent.com/dhruvmistry2000/mylinux/master/setup.sh | bash
 ```
+
+# Customized Shortcuts
+The following are some of the customized shortcuts defined in `config/sxhkd/sxhkdrc`:
+
+- **Launch Terminal**: `Super + Return` 
+- **Launch Browser**: `Super + b`
+- **Take Screenshot**: `Super + Ctrl + f` 
+- **Switch Workspaces**: `Super + {1,2,3,...}`
+- **Launch VS Code**: `Super + c`
+- **Launch Brave**: `Super + n`
+- **Open App Drawer**: `Super + Space`
+- **Launch Thunar(File manager)**: `Super + e`
+
+These shortcuts enhance productivity and streamline workflow within the Linux environment.
+
+

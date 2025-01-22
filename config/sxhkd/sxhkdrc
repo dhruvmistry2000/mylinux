@@ -129,7 +129,7 @@ super + n
 
 #code
 super + c
-	cursor
+	code
 
 #Github-Desktop
 super + g
