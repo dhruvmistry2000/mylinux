@@ -35,12 +35,12 @@ The following are some of the customized shortcuts defined in `config/sxhkd/sxhk
 
 - **Launch Terminal**: `Super + Return` 
 - **Launch Browser**: `Super + b`
-- **Take Screenshot**: `Super + Ctrl + f` 
 - **Switch Workspaces**: `Super + {1,2,3,...}`
 - **Launch VS Code**: `Super + c`
 - **Launch Brave**: `Super + n`
-- **Open App Drawer**: `Super + Space`
 - **Launch Thunar(File manager)**: `Super + e`
+- **Open App Drawer**: `Super + Space`
+- **Take Screenshot**: `Super + Ctrl + f` 
 
 These shortcuts enhance productivity and streamline workflow within the Linux environment.
 
