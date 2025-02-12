@@ -381,6 +381,16 @@ wallpaper() {
         printf "${RED}wallpaper.sh not found.${RC}\n"
     fi
 }
+
+theme() {
+    if [ -f theme.sh ]; then
+        sudo chmod +x theme.sh
+        ./wallpaper.sh
+        printf "${GREEN}Theme installed successfully!${RC}\n"
+    else
+        printf "${RED}theme.sh not found.${RC}\n"
+    fi
+}
     
 
 checkEnv
@@ -392,3 +402,4 @@ picom_animations
 installMyBashConfig
 copyVimrc
 wallpaper
+theme
