@@ -178,8 +178,10 @@ installDepend() {
         printf "${YELLOW}Installing ly...${RC}\n"
         if [ "$PACKAGER" = "pacman" ]; then
             ${SUDO_CMD} ${PACKAGER} --noconfirm -S ly
+            sudo systemctl enable ly
         elif [ "$PACKAGER" = "dnf" ]; then
             ${SUDO_CMD} ${PACKAGER} install -y ly
+            sudo systemctl enable ly
         else
             printf "${RED}Unsupported package manager: $PACKAGER${RC}\n"
             exit 1
@@ -192,7 +194,6 @@ installDepend() {
         fi
     fi
 
-    sudo systemctl enable ly
     if [ $? -eq 0 ]; then
         printf "${GREEN}Successfully enabled ly${RC}\n"
     else
