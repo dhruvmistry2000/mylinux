@@ -374,9 +374,9 @@ copyVimrc() {
 }
 
 wallpaper() {
-    if [ -f wallpaper.sh ]; then
-        sudo chmod +x wallpaper.sh
-        ./wallpaper.sh
+    if [ -f scripts/wallpaper.sh ]; then
+        sudo chmod +x scripts/wallpaper.sh
+        ./scripts/wallpaper.sh
         printf "${GREEN}Wallpapers downloaded successfully!${RC}\n"
     else
         printf "${RED}wallpaper.sh not found.${RC}\n"
@@ -384,9 +384,9 @@ wallpaper() {
 }
 
 theme() {
-    if [ -f theme.sh ]; then
-        sudo chmod +x theme.sh
-        ./wallpaper.sh
+    if [ -f scripts/theme.sh ]; then
+        sudo chmod +x scripts/theme.sh
+        ./scripts/theme.sh
         printf "${GREEN}Theme installed successfully!${RC}\n"
     else
         printf "${RED}theme.sh not found.${RC}\n"
