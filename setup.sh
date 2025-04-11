@@ -364,14 +364,6 @@ installMyBashConfig() {
         printf "${RED}Failed to install My Bash configuration.${RC}\n"
     fi
 }
-copyVimrc() {
-    if [ -f "$REPO_DIR/.vimrc" ]; then
-        cp "$REPO_DIR/.vimrc" "$HOME/.vimrc"
-        printf "${GREEN}.vimrc copied to $HOME successfully!${RC}\n"
-    else
-        printf "${RED}.vimrc not found in $REPO_DIR${RC}\n"
-    fi
-}
 
 wallpaper() {
     if [ -f scripts/wallpaper.sh ]; then
@@ -401,6 +393,5 @@ setupXorg
 installFont
 picom_animations
 installMyBashConfig
-copyVimrc
 wallpaper
 theme
