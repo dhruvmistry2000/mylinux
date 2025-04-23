@@ -138,3 +138,7 @@ super + g
 #flameshot
 super + ctrl + f 
 	flameshot gui
+
+# lockscreen
+super + shift + x
+    betterlockscreen -l dim
