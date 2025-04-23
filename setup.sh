@@ -104,7 +104,7 @@ installDepend() {
     ## Check for dependencies.
       ## Check for dependencies based on the package manager.
     if [ "$PACKAGER" = "pacman" ]; then
-        DEPENDENCIES='arandr xorg ntfs-3g bat betterlockscreen btop tree xarchiver flameshot fastfetch wget nvtop unzip bspwm dconf dunst kitty nautilus thunar-volman thunar-archive-plugin nitrogen picom git ly yazi bluez bluez-utils brightnessctl htop npm python3-pip libconfig dbus libev meson pcre2 pixman uthash xcb-util-image xcb-util-renderutil cmake libxft libimlib2 libxinerama libxcb-res xorg-xev xorg-xbacklight alsa-utils rofi polybar sxhkd tldr vim nwg-look fzf materia-gtk-theme'
+        DEPENDENCIES='arandr xorg ntfs-3g bat btop tree xarchiver flameshot fastfetch wget nvtop unzip bspwm dconf dunst kitty nautilus thunar-volman thunar-archive-plugin nitrogen picom git ly yazi bluez bluez-utils brightnessctl htop npm python3-pip libconfig dbus libev meson pcre2 pixman uthash xcb-util-image xcb-util-renderutil cmake libxft libimlib2 libxinerama libxcb-res xorg-xev xorg-xbacklight alsa-utils rofi polybar sxhkd tldr vim nwg-look fzf materia-gtk-theme'
     elif [ "$PACKAGER" = "nala" ] || [ "$PACKAGER" = "apt" ]; then
         DEPENDENCIES='bspwm xorg sxhkd btop picom xarchiver flameshot kitty polybar rofi thunar nvtop thunar-archive-plugin thunar-volman nitrogen htop brightnessctl dunst git cmake meson npm python3 python3-pip  fontconfig fzf vim materia-gtk-theme'
     elif [ "$PACKAGER" = "dnf" ]; then
