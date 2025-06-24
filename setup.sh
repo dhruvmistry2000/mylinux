@@ -374,10 +374,6 @@ wallpaper() {
         printf "${RED}wallpaper.sh not found.${RC}\n"
     fi
 }
-betterlockscreen() {
-
-    wget https://raw.githubusercontent.com/betterlockscreen/betterlockscreen/main/install.sh -O - -q | sudo bash -s system
-}
 
 theme() {
     if [ -f scripts/theme.sh ]; then
@@ -399,4 +395,3 @@ picom_animations
 installMyBashConfig
 wallpaper
 theme
-betterlockscreen
